@@ -6,7 +6,7 @@ local MacLib = {
 	end
 }
 
-local DISCORD_INVITE = "https://discord.gg/82uYNgHjAQ"
+local DISCORD_INVITE = "https://discord.gg/XXXXXXX"
 
 --// Services
 local TweenService = MacLib.GetService("TweenService")
@@ -126,7 +126,7 @@ function MacLib:Window(Settings)
 	base.Name = "Base"
 	base.AnchorPoint = Vector2.new(0.5, 0.5)
 	base.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-	base.BackgroundTransparency = Settings.AcrylicBlur and 0.05 or 0
+	base.BackgroundTransparency = Settings.AcrylicBlur and 0.15 or 0
 	base.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	base.BorderSizePixel = 0
 	base.Position = UDim2.fromScale(0.5, 0.5)
@@ -318,7 +318,7 @@ function MacLib:Window(Settings)
 	end
 
 	applyState(maximize, true)
-	
+
 
 	local controlsList = {exit, minimize}
 	for _, button in pairs(controlsList) do
@@ -367,53 +367,42 @@ function MacLib:Window(Settings)
 	divider2.Size = UDim2.new(1, 0, 0, 1)
 	divider2.Parent = information
 
-	local informationHolder = Instance.new("Frame")
-	informationHolder.Name = "InformationHolder"
-	informationHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	informationHolder.BackgroundTransparency = 1
-	informationHolder.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	informationHolder.BorderSizePixel = 0
-	informationHolder.Size = UDim2.fromScale(1, 1)
+    --// تعديل الحاوية لدعم الترتيب الأفقي
+    local informationHolder = Instance.new("Frame")
+    informationHolder.Name = "InformationHolder"
+    informationHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    informationHolder.BackgroundTransparency = 1
+    informationHolder.Size = UDim2.fromScale(1, 1)
 
-	local informationHolderUIPadding = Instance.new("UIPadding")
-	informationHolderUIPadding.Name = "InformationHolderUIPadding"
-	informationHolderUIPadding.PaddingBottom = UDim.new(0, 10)
-	informationHolderUIPadding.PaddingLeft = UDim.new(0, 23)
-	informationHolderUIPadding.PaddingRight = UDim.new(0, 22)
-	informationHolderUIPadding.PaddingTop = UDim.new(0, 10)
-	informationHolderUIPadding.Parent = informationHolder
+    
 
-	local globalSettingsButton = Instance.new("ImageButton")
-	globalSettingsButton.Name = "GlobalSettingsButton"
-	globalSettingsButton.Image = assets.globe
-	globalSettingsButton.ImageTransparency = 0.5
-	globalSettingsButton.AnchorPoint = Vector2.new(1, 0.5)
-	globalSettingsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	globalSettingsButton.BackgroundTransparency = 1
-	globalSettingsButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	globalSettingsButton.BorderSizePixel = 0
-	globalSettingsButton.Position = UDim2.fromScale(1, 0.5)
-	globalSettingsButton.Size = UDim2.fromOffset(16,16)
-	globalSettingsButton.Parent = informationHolder
+    local informationHolderLayout = Instance.new("UIListLayout")
+    informationHolderLayout.FillDirection = Enum.FillDirection.Horizontal
+    informationHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    informationHolderLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+    informationHolderLayout.Padding = UDim.new(0, 10) -- المسافة بين الصورة والنص
+    informationHolderLayout.Parent = informationHolder
 
-	local function ChangeGlobalSettingsButtonState(State)
-		if State == "Default" then
-			Tween(globalSettingsButton, TweenInfo.new(0.2, Enum.EasingStyle.Sine), {
-				ImageTransparency = 0.5
-			}):Play()
-		elseif State == "Hover" then
-			Tween(globalSettingsButton, TweenInfo.new(0.2, Enum.EasingStyle.Sine), {
-				ImageTransparency = 0.3
-			}):Play()
-		end
-	end
+    local informationHolderUIPadding = Instance.new("UIPadding")
+    informationHolderUIPadding.PaddingBottom = UDim.new(0, 10)
+    informationHolderUIPadding.PaddingLeft = UDim.new(0, 15) -- تقليلها قليلاً لتناسب الأيقونة
+    informationHolderUIPadding.PaddingRight = UDim.new(0, 15)
+    informationHolderUIPadding.PaddingTop = UDim.new(0, 10)
+    informationHolderUIPadding.Parent = informationHolder
 
-	globalSettingsButton.MouseEnter:Connect(function()
-		ChangeGlobalSettingsButtonState("Hover")
-	end)
-	globalSettingsButton.MouseLeave:Connect(function()
-		ChangeGlobalSettingsButtonState("Default")
-	end)
+    --// 2. أيقونة الصورة (بدل النص)
+    local titleIcon = Instance.new("ImageLabel") -- تم التغيير إلى ImageLabel
+    titleIcon.Name = "TitleIcon"
+    titleIcon.Size = UDim2.fromOffset(36, 36)
+    titleIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    titleIcon.BackgroundTransparency = 1 -- اجعلها 1 إذا كانت الصورة شفافة
+    titleIcon.Image = "rbxassetid://16951983177" -- ضع هنا رقم الـ ID الخاص بصورتك
+    titleIcon.LayoutOrder = 0
+    titleIcon.Parent = informationHolder
+
+    local iconCorner = Instance.new("UICorner")
+    iconCorner.CornerRadius = UDim.new(0, 8)
+    iconCorner.Parent = titleIcon
 
 	local titleFrame = Instance.new("Frame")
 	titleFrame.Name = "TitleFrame"
@@ -483,6 +472,37 @@ function MacLib:Window(Settings)
 	informationHolder.Parent = information
 
 	information.Parent = sidebar
+
+	local globalSettingsButton = Instance.new("ImageButton")
+	globalSettingsButton.Name = "GlobalSettingsButton"
+	globalSettingsButton.Image = assets.globe
+	globalSettingsButton.ImageTransparency = 0.5
+	globalSettingsButton.AnchorPoint = Vector2.new(1, 0.5)
+	globalSettingsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	globalSettingsButton.BackgroundTransparency = 1
+	globalSettingsButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	globalSettingsButton.BorderSizePixel = 0
+	globalSettingsButton.Size = UDim2.fromOffset(16,16)
+	globalSettingsButton.Parent = informationHolder1
+
+	local function ChangeGlobalSettingsButtonState(State)
+		if State == "Default" then
+			Tween(globalSettingsButton, TweenInfo.new(0.2, Enum.EasingStyle.Sine), {
+				ImageTransparency = 0.5
+			}):Play()
+		elseif State == "Hover" then
+			Tween(globalSettingsButton, TweenInfo.new(0.2, Enum.EasingStyle.Sine), {
+				ImageTransparency = 0.3
+			}):Play()
+		end
+	end
+
+	globalSettingsButton.MouseEnter:Connect(function()
+		ChangeGlobalSettingsButtonState("Hover")
+	end)
+	globalSettingsButton.MouseLeave:Connect(function()
+		ChangeGlobalSettingsButtonState("Default")
+	end)
 
 	local sidebarGroup = Instance.new("Frame")
 	sidebarGroup.Name = "SidebarGroup"
@@ -853,50 +873,50 @@ function MacLib:Window(Settings)
 	topbar.Parent = content
 
 	local dragging = false
-local dragStart
-local startPos
-local dragInput
+	local dragStart
+	local startPos
+	local dragInput
 
-local function update(input)
-	local delta = input.Position - dragStart
-	base.Position = UDim2.new(
-		startPos.X.Scale,
-		startPos.X.Offset + delta.X,
-		startPos.Y.Scale,
-		startPos.Y.Offset + delta.Y
-	)
-end
-
-topbar.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1
-	or input.UserInputType == Enum.UserInputType.Touch then
-		dragging = true
-		dragStart = input.Position
-		startPos = base.Position
-
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
+	local function update(input)
+		local delta = input.Position - dragStart
+		base.Position = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
 	end
-end)
 
-topbar.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement
-	or input.UserInputType == Enum.UserInputType.Touch then
-		dragInput = input
-	end
-end)
+	topbar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1
+			or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = base.Position
 
-UserInputService.InputChanged:Connect(function(input)
-	if dragging and input == dragInput then
-		update(input)
-	end
-end)
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	topbar.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement
+			or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if dragging and input == dragInput then
+			update(input)
+		end
+	end)
 
 	content.Parent = base
-	
+
 
 	local globalSettings = Instance.new("Frame")
 	globalSettings.Name = "GlobalSettings"
@@ -5333,7 +5353,7 @@ end)
 
 	function WindowFunctions:SetAcrylicBlurState(State)
 		acrylicBlur = State
-		base.BackgroundTransparency = State and 0.05 or 0
+		base.BackgroundTransparency = State and 0.15 or 0
 	end
 
 	function WindowFunctions:GetAcrylicBlurState()

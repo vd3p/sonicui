@@ -125,8 +125,8 @@ function MacLib:Window(Settings)
 	local base = Instance.new("Frame")
 	base.Name = "Base"
 	base.AnchorPoint = Vector2.new(0.5, 0.5)
-	base.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-	base.BackgroundTransparency = Settings.AcrylicBlur and 0.15 or 0
+	base.BackgroundColor3 = Color3.fromRGB(11, 11, 15)
+	base.BackgroundTransparency = Settings.AcrylicBlur and 0.09 or 0
 	base.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	base.BorderSizePixel = 0
 	base.Position = UDim2.fromScale(0.5, 0.5)
@@ -160,13 +160,31 @@ function MacLib:Window(Settings)
 	local divider = Instance.new("Frame")
 	divider.Name = "Divider"
 	divider.AnchorPoint = Vector2.new(1, 0)
+	divider.Size = UDim2.new(1, -24, 0, 1)
 	divider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	divider.BackgroundTransparency = 0.9
+	divider.BackgroundTransparency = 0.7
 	divider.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	divider.BorderSizePixel = 0
 	divider.Position = UDim2.fromScale(1, 0)
 	divider.Size = UDim2.new(0, 1, 1, 0)
 	divider.Parent = sidebar
+	
+	local gradient = Instance.new("UIGradient")
+	gradient.Color = ColorSequence.new({
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+		ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
+	})
+
+	gradient.Transparency = NumberSequence.new({
+		NumberSequenceKeypoint.new(0, 1),
+		NumberSequenceKeypoint.new(0.5, 0),
+		NumberSequenceKeypoint.new(1, 1),
+	})
+
+	gradient.Parent = divider
+
+
 
 	local dividerInteract = Instance.new("TextButton")
 	dividerInteract.Name = "DividerInteract"
@@ -367,42 +385,42 @@ function MacLib:Window(Settings)
 	divider2.Size = UDim2.new(1, 0, 0, 1)
 	divider2.Parent = information
 
-    --// تعديل الحاوية لدعم الترتيب الأفقي
-    local informationHolder = Instance.new("Frame")
-    informationHolder.Name = "InformationHolder"
-    informationHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    informationHolder.BackgroundTransparency = 1
-    informationHolder.Size = UDim2.fromScale(1, 1)
+	--// تعديل الحاوية لدعم الترتيب الأفقي
+	local informationHolder = Instance.new("Frame")
+	informationHolder.Name = "InformationHolder"
+	informationHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	informationHolder.BackgroundTransparency = 1
+	informationHolder.Size = UDim2.fromScale(1, 1)
 
-    
 
-    local informationHolderLayout = Instance.new("UIListLayout")
-    informationHolderLayout.FillDirection = Enum.FillDirection.Horizontal
-    informationHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    informationHolderLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-    informationHolderLayout.Padding = UDim.new(0, 10) -- المسافة بين الصورة والنص
-    informationHolderLayout.Parent = informationHolder
 
-    local informationHolderUIPadding = Instance.new("UIPadding")
-    informationHolderUIPadding.PaddingBottom = UDim.new(0, 10)
-    informationHolderUIPadding.PaddingLeft = UDim.new(0, 15) -- تقليلها قليلاً لتناسب الأيقونة
-    informationHolderUIPadding.PaddingRight = UDim.new(0, 15)
-    informationHolderUIPadding.PaddingTop = UDim.new(0, 10)
-    informationHolderUIPadding.Parent = informationHolder
+	local informationHolderLayout = Instance.new("UIListLayout")
+	informationHolderLayout.FillDirection = Enum.FillDirection.Horizontal
+	informationHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	informationHolderLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+	informationHolderLayout.Padding = UDim.new(0, 10) -- المسافة بين الصورة والنص
+	informationHolderLayout.Parent = informationHolder
 
-    --// 2. أيقونة الصورة (بدل النص)
-    local titleIcon = Instance.new("ImageLabel") -- تم التغيير إلى ImageLabel
-    titleIcon.Name = "TitleIcon"
-    titleIcon.Size = UDim2.fromOffset(36, 36)
-    titleIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    titleIcon.BackgroundTransparency = 1 -- اجعلها 1 إذا كانت الصورة شفافة
-    titleIcon.Image = "rbxassetid://16951983177" -- ضع هنا رقم الـ ID الخاص بصورتك
-    titleIcon.LayoutOrder = 0
-    titleIcon.Parent = informationHolder
+	local informationHolderUIPadding = Instance.new("UIPadding")
+	informationHolderUIPadding.PaddingBottom = UDim.new(0, 10)
+	informationHolderUIPadding.PaddingLeft = UDim.new(0, 15) -- تقليلها قليلاً لتناسب الأيقونة
+	informationHolderUIPadding.PaddingRight = UDim.new(0, 15)
+	informationHolderUIPadding.PaddingTop = UDim.new(0, 10)
+	informationHolderUIPadding.Parent = informationHolder
 
-    local iconCorner = Instance.new("UICorner")
-    iconCorner.CornerRadius = UDim.new(0, 8)
-    iconCorner.Parent = titleIcon
+	--// 2. أيقونة الصورة (بدل النص)
+	local titleIcon = Instance.new("ImageLabel") -- تم التغيير إلى ImageLabel
+	titleIcon.Name = "TitleIcon"
+	titleIcon.Size = UDim2.fromOffset(36, 36)
+	titleIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	titleIcon.BackgroundTransparency = 1 -- اجعلها 1 إذا كانت الصورة شفافة
+	titleIcon.Image = "rbxassetid://118131312817141" -- ضع هنا رقم الـ ID الخاص بصورتك
+	titleIcon.LayoutOrder = 0
+	titleIcon.Parent = informationHolder
+
+	local iconCorner = Instance.new("UICorner")
+	iconCorner.CornerRadius = UDim.new(0, 8)
+	iconCorner.Parent = titleIcon
 
 	local titleFrame = Instance.new("Frame")
 	titleFrame.Name = "TitleFrame"
@@ -516,11 +534,11 @@ function MacLib:Window(Settings)
 	local userInfo = Instance.new("Frame")
 	userInfo.Name = "UserInfo"
 	userInfo.AnchorPoint = Vector2.new(0, 1)
+	userInfo.Position = UDim2.new(0, -20, 1.05, 0)
 	userInfo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	userInfo.BackgroundTransparency = 1
 	userInfo.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	userInfo.BorderSizePixel = 0
-	userInfo.Position = UDim2.fromScale(0, 1)
 	userInfo.Size = UDim2.new(1, 0, 0, 95)
 
 	local informationGroup = Instance.new("Frame")
@@ -585,7 +603,7 @@ function MacLib:Window(Settings)
 
 	local userAndDisplayFrameUIPadding = Instance.new("UIPadding")
 	userAndDisplayFrameUIPadding.Name = "UserAndDisplayFrameUIPadding"
-	userAndDisplayFrameUIPadding.PaddingLeft = UDim.new(0, 8)
+	userAndDisplayFrameUIPadding.PaddingLeft = UDim.new(0, 2)
 	userAndDisplayFrameUIPadding.PaddingTop = UDim.new(0, 3)
 	userAndDisplayFrameUIPadding.Parent = userAndDisplayFrame
 
@@ -649,17 +667,18 @@ function MacLib:Window(Settings)
 
 	local userInfoUIPadding = Instance.new("UIPadding")
 	userInfoUIPadding.Name = "UserInfoUIPadding"
-	userInfoUIPadding.PaddingLeft = UDim.new(0, 10)
-	userInfoUIPadding.PaddingRight = UDim.new(0, 10)
+	userInfoUIPadding.PaddingLeft = UDim.new(0, 14)
+	userInfoUIPadding.PaddingRight = UDim.new(0, 14)
 	userInfoUIPadding.Parent = userInfo
 
 	userInfo.Parent = sidebarGroup
 
 	local sidebarGroupUIPadding = Instance.new("UIPadding")
 	sidebarGroupUIPadding.Name = "SidebarGroupUIPadding"
-	sidebarGroupUIPadding.PaddingLeft = UDim.new(0, 10)
+	sidebarGroupUIPadding.PaddingLeft = UDim.new(0, 4)   -- يوديه يسار
 	sidebarGroupUIPadding.PaddingRight = UDim.new(0, 10)
 	sidebarGroupUIPadding.PaddingTop = UDim.new(0, 31)
+	sidebarGroupUIPadding.PaddingBottom = UDim.new(0, 12) -- ينزله تحت
 	sidebarGroupUIPadding.Parent = sidebarGroup
 
 	local tabSwitchers = Instance.new("Frame")
@@ -1425,17 +1444,23 @@ function MacLib:Window(Settings)
 			tabSwitcher.Text = ""
 			tabSwitcher.TextColor3 = Color3.fromRGB(0, 0, 0)
 			tabSwitcher.TextSize = 14
-			tabSwitcher.AutoButtonColor = false
 			tabSwitcher.AnchorPoint = Vector2.new(0.5, 0)
-			tabSwitcher.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			tabSwitcher.BackgroundTransparency = 1
 			tabSwitcher.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			tabSwitcher.BorderSizePixel = 0
 			tabSwitcher.Position = UDim2.fromScale(0.5, 0)
-			tabSwitcher.Size = UDim2.new(1, -21, 0, 40)
+			tabSwitcher.BackgroundColor3 = Color3.fromRGB(24, 25, 34) -- #181922
+			tabSwitcher.BackgroundTransparency = 1
+			tabSwitcher.Size = UDim2.new(1, -16, 0, 42)
+			tabSwitcher.AutoButtonColor = false
+
 
 			tabIndex += 1
 			tabSwitcher.LayoutOrder = tabIndex
+			
+			local tabCorner = Instance.new("UICorner")
+			tabCorner.CornerRadius = UDim.new(0, 10)
+			tabCorner.Parent = tabSwitcher
+
 
 			local tabSwitcherUICorner = Instance.new("UICorner")
 			tabSwitcherUICorner.Name = "TabSwitcherUICorner"
@@ -1595,9 +1620,8 @@ function MacLib:Window(Settings)
 				local section = Instance.new("Frame")
 				section.Name = "Section"
 				section.AutomaticSize = Enum.AutomaticSize.Y
-				section.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-				section.BackgroundTransparency = 0.98
-				section.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				section.BackgroundColor3 = Color3.fromRGB(24, 25, 34) -- #181922ff
+				section.BackgroundTransparency = 0.8
 				section.BorderSizePixel = 0
 				section.Position = UDim2.fromScale(0, 6.78e-08)
 				section.Size = UDim2.fromScale(1, 0)
@@ -1605,6 +1629,7 @@ function MacLib:Window(Settings)
 				section.Parent = Settings.Side == "Left" and left or right
 
 				local sectionUICorner = Instance.new("UICorner")
+				sectionUICorner.CornerRadius = UDim.new(0, 14)
 				sectionUICorner.Name = "SectionUICorner"
 				sectionUICorner.Parent = section
 
@@ -1612,7 +1637,8 @@ function MacLib:Window(Settings)
 				sectionUIStroke.Name = "SectionUIStroke"
 				sectionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 				sectionUIStroke.Color = Color3.fromRGB(255, 255, 255)
-				sectionUIStroke.Transparency = 0.95
+				sectionUIStroke.Transparency = 0.85
+				sectionUIStroke.Thickness = 1
 				sectionUIStroke.Parent = section
 
 				local sectionUIListLayout = Instance.new("UIListLayout")
@@ -5911,3 +5937,5 @@ function MacLib:Demo()
 end
 
 return MacLib
+
+-- 1

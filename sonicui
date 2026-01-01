@@ -4788,6 +4788,20 @@ function MacLib:Window(Settings)
 
 				autoloadLabel = configSection:Label({Text = "Autoload config: None"})
 
+				configSection:Toggle({
+				Name = "Show User Info",
+				Default = Window:GetUserInfoState(),
+				Callback = function(value)
+					Window:SetUserInfoState(value)
+
+					Window:Notify({
+						Title = Window.Settings.Title,
+						Description = value and "User Info Enabled" or "User Info Disabled",
+						Lifetime = 3
+					})
+				end,
+			})
+
 				if isfile(MacLib.Folder .. "/settings/autoload.txt") then
 					local name = readfile(MacLib.Folder .. "/settings/autoload.txt")
 					autoloadLabel:UpdateName("Autoload config: " .. name)
@@ -5911,3 +5925,5 @@ function MacLib:Demo()
 end
 
 return MacLib
+
+-- updated
